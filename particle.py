@@ -1,7 +1,7 @@
 import pygame
 
 class Particle:
-    def __init__(self, x, y, angle, velocity, color, size):
+    def __init__(self, x=0, y=0, angle=0, velocity=0, color=(0,0,0), size=0):
         self.x = x
         self.y = y
         self.angle = angle
