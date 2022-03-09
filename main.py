@@ -24,6 +24,8 @@ testpoint = Particle()
 
 def main_game_loop():
 
+    testpoint = Particle(50,50,angle=45,velocity=10,color=WHITE,size=5)
+
     while True:
         events = pygame.event.get()
         for e in events:
@@ -35,7 +37,7 @@ def main_game_loop():
         
         screen.fill(BLACK)
 
-        testpoint = Particle(50,50,0,0,WHITE,10)
+        
         testpoint.update()
         testpoint.draw(screen)
 
