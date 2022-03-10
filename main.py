@@ -1,5 +1,5 @@
 import pygame
-
+import math
 from particle import Particle
 
 
@@ -11,7 +11,8 @@ WHITE = (255,255,255)
 WIDTH = 900
 HEIGHT = 900
 FPS = 60
-
+BASE_START_POINT = [WIDTH // 2, HEIGHT - 20]
+print(BASE_START_POINT)
 # initalize the pygame window
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -35,21 +36,22 @@ active_particles = []
 def main_game_loop():
     start_angle = 0
 
-    active_particles.append(Particle(50,50,angle=start_angle,velocity=10,color=WHITE,size=5))
-
     while True:
+        # getting the angle from the base position to the cursor.
+        cursor_position_x, cursor_position_y = pygame.mouse.get_pos()
+        # more trigonometry, been literally 20+ years since ive used any of this
+        opposite_len = cursor_position_x - BASE_START_POINT[0] # x 
+        adjacent_len = BASE_START_POINT[1] - cursor_position_y # y
+        angle_to_cursor = math.degrees(math.atan(opposite_len/adjacent_len))
+
         events = pygame.event.get()
         for e in events:
             if e.type == pygame.QUIT:
                 quit()
             # make a new particle every click
             if e.type == pygame.MOUSEBUTTONDOWN:
-                cursor_position_x, cursor_position_y = pygame.mouse.get_pos()
-                active_particles.append(Particle(cursor_position_x,cursor_position_y,angle=start_angle,velocity=10,color=WHITE,size=5))
-                if start_angle == 315:
-                    start_angle = 0
-                else:
-                    start_angle += 45
+                # spawn a new particle with every click
+                active_particles.append(Particle(BASE_START_POINT[0],BASE_START_POINT[1],angle=angle_to_cursor,velocity=10,color=WHITE,size=5))
 
             if e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_ESCAPE:
