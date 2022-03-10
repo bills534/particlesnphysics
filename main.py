@@ -8,7 +8,6 @@ from particle import Particle
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 
-
 # inital pygame settings
 WIDTH = 900
 HEIGHT = 900
@@ -20,17 +19,33 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
 
-testpoint = Particle()
+def particle_off_screen(position):
+    posx = position[0]
+    posy = position[1]
+    if posx < 0 or posx > WIDTH:
+        return True
+    if posy < 0 or posy > HEIGHT:
+        return True
+
+    return False
+
+# list to hold all the active particles
+active_particles = []
 
 def main_game_loop():
 
-    testpoint = Particle(50,50,angle=45,velocity=10,color=WHITE,size=5)
+    active_particles.append(Particle(50,50,angle=45,velocity=10,color=WHITE,size=5))
 
     while True:
         events = pygame.event.get()
         for e in events:
             if e.type == pygame.QUIT:
                 quit()
+            # make a new particle every click
+            if e.type == pygame.MOUSEBUTTONDOWN:
+                cursor_position_x, cursor_position_y = pygame.mouse.get_pos()
+                active_particles.append(Particle(cursor_position_x,cursor_position_y,angle=45,velocity=10,color=WHITE,size=5))
+
             if e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_ESCAPE:
                     quit()
@@ -38,8 +53,13 @@ def main_game_loop():
         screen.fill(BLACK)
 
         
-        testpoint.update()
-        testpoint.draw(screen)
+        for particle in active_particles:
+            # clear out particles no longer on screen
+            if particle_off_screen(particle.current_position):
+                active_particles.remove(particle)
+            else:
+                particle.update()
+                particle.draw(screen)
 
         pygame.display.update()
         clock.tick(FPS)

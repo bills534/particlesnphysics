@@ -11,11 +11,13 @@ class Particle:
         self.velocity = velocity/100
         self.color = color
         self.size = size
+        self.current_position = [0,0]
 
     def update(self):
         # setting velocity to the x/y
         self.x += self.x_velocity
         self.y += self.y_velocity
+        self.current_position = [self.x, self.y]
         
         # updating velocity based on math
         self.x_velocity += math.cos(math.radians(self.angle)) * self.velocity
