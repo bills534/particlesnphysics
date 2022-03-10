@@ -32,9 +32,11 @@ def particle_off_screen(position):
 # list to hold all the active particles
 active_particles = []
 
-def main_game_loop():
 
-    active_particles.append(Particle(50,50,angle=45,velocity=10,color=WHITE,size=5))
+def main_game_loop():
+    start_angle = 0
+
+    active_particles.append(Particle(50,50,angle=start_angle,velocity=10,color=WHITE,size=5))
 
     while True:
         events = pygame.event.get()
@@ -44,7 +46,11 @@ def main_game_loop():
             # make a new particle every click
             if e.type == pygame.MOUSEBUTTONDOWN:
                 cursor_position_x, cursor_position_y = pygame.mouse.get_pos()
-                active_particles.append(Particle(cursor_position_x,cursor_position_y,angle=45,velocity=10,color=WHITE,size=5))
+                active_particles.append(Particle(cursor_position_x,cursor_position_y,angle=start_angle,velocity=10,color=WHITE,size=5))
+                if start_angle == 315:
+                    start_angle = 0
+                else:
+                    start_angle += 45
 
             if e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_ESCAPE:

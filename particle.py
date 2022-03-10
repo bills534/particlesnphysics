@@ -16,12 +16,12 @@ class Particle:
     def update(self):
         # setting velocity to the x/y
         self.x += self.x_velocity
-        self.y += self.y_velocity
+        self.y -= self.y_velocity
         self.current_position = [self.x, self.y]
         
         # updating velocity based on math
-        self.x_velocity += math.cos(math.radians(self.angle)) * self.velocity
-        self.y_velocity += math.sin(math.radians(self.angle)) * self.velocity
+        self.x_velocity += math.sin(math.radians(self.angle)) * self.velocity
+        self.y_velocity += math.cos(math.radians(self.angle)) * self.velocity
 
     def draw(self, screen):
         border_thickness = 2
