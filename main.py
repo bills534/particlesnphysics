@@ -7,11 +7,12 @@ from particle import Particle
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 LASER_RED = (235,5,5)
+WATER_BLUE = (50, 141, 168)
 
 # inital pygame settings
 WIDTH = 900
 HEIGHT = 900
-FPS = 60
+FPS = 120
 BASE_START_POINT = [WIDTH // 2, HEIGHT - 20]
 
 # initalize the pygame window
@@ -67,7 +68,7 @@ def main_game_loop():
 
         # if gun is active shoot off particles
         if firing:
-            active_particles.append(Particle(BASE_START_POINT[0],BASE_START_POINT[1],angle=angle_to_cursor,velocity=10,color=WHITE,size=5))
+            active_particles.append(Particle(BASE_START_POINT[0],BASE_START_POINT[1],angle=angle_to_cursor,power=10,color=WATER_BLUE,size=5))
         
         # handle particles that have left the screen, draw the ones that have not.
         for particle in active_particles:
